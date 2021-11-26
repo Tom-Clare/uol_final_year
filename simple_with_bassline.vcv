@@ -12,7 +12,7 @@
       "data": {
         "audio": {
           "driver": 6,
-          "deviceName": "Speaker/Headphone (Realtek(R) Audio)",
+          "deviceName": "Speakers - Motherboard Output (Realtek High Definition Audio)",
           "offset": 0,
           "maxChannels": 8,
           "sampleRate": 44100,
@@ -443,7 +443,7 @@
       "leftModuleId": 13,
       "data": {
         "moduleVersion": 1,
-        "currentStep": 0,
+        "currentStep": 18,
         "shiftPosition": 0,
         "clockState": false,
         "runState": true,
@@ -518,33 +518,6 @@
       },
       "pos": [
         43,
-        1
-      ]
-    },
-    {
-      "id": 14,
-      "plugin": "Fundamental",
-      "version": "1.4.0",
-      "model": "Quantizer",
-      "params": [],
-      "data": {
-        "enabledNotes": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          true,
-          true
-        ]
-      },
-      "pos": [
-        24,
         1
       ]
     }
@@ -647,19 +620,19 @@
       "color": "#c91847"
     },
     {
-      "id": 1,
+      "id": 235,
       "outputModuleId": 3,
       "outputId": 2,
-      "inputModuleId": 14,
-      "inputId": 0,
+      "inputModuleId": 4,
+      "inputId": 3,
       "color": "#0c8e15"
     },
     {
-      "id": 17,
-      "outputModuleId": 14,
+      "id": 236,
+      "outputModuleId": 10,
       "outputId": 0,
-      "inputModuleId": 4,
-      "inputId": 3,
+      "inputModuleId": 6,
+      "inputId": 5,
       "color": "#0986ad"
     }
   ]
