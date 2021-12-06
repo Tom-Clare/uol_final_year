@@ -19,7 +19,7 @@
         }
       },
       "pos": [
-        87,
+        70,
         0
       ]
     },
@@ -31,29 +31,29 @@
       "params": [
         {
           "id": 0,
-          "value": 0.0
+          "value": 0.563999832
         },
         {
           "id": 1,
-          "value": 0.913581252
+          "value": 0.909338176
         },
         {
           "id": 2,
-          "value": 0.770897686
+          "value": 0.855750263
         },
         {
           "id": 3,
-          "value": 1.0
+          "value": 0.486639082
         },
         {
           "id": 4,
-          "value": 1.0
+          "value": 0.487903446
         }
       ],
-      "leftModuleId": 3,
+      "leftModuleId": 6,
       "rightModuleId": 1,
       "pos": [
-        77,
+        60,
         0
       ]
     },
@@ -73,7 +73,7 @@
         },
         {
           "id": 2,
-          "value": -54.0
+          "value": -15.0659218
         },
         {
           "id": 3,
@@ -81,7 +81,7 @@
         },
         {
           "id": 4,
-          "value": 0.0
+          "value": 0.526500344
         },
         {
           "id": 5,
@@ -92,10 +92,10 @@
           "value": 0.0
         }
       ],
-      "leftModuleId": 6,
-      "rightModuleId": 2,
+      "leftModuleId": 9,
+      "rightModuleId": 10,
       "pos": [
-        67,
+        22,
         0
       ]
     },
@@ -107,7 +107,7 @@
       "params": [
         {
           "id": 0,
-          "value": 0.0
+          "value": 0.0674999952
         },
         {
           "id": 1,
@@ -119,13 +119,13 @@
         },
         {
           "id": 3,
-          "value": 0.0
+          "value": 0.022499999
         }
       ],
       "leftModuleId": 10,
-      "rightModuleId": 3,
+      "rightModuleId": 2,
       "pos": [
-        59,
+        52,
         0
       ]
     },
@@ -153,35 +153,35 @@
         },
         {
           "id": 4,
-          "value": 3.9000001
+          "value": 0.0
         },
         {
           "id": 5,
-          "value": 4.0
+          "value": 1.30500042
         },
         {
           "id": 6,
-          "value": 4.0
+          "value": 1.29999995
         },
         {
           "id": 7,
-          "value": 4.0
+          "value": 0.0
         },
         {
           "id": 8,
-          "value": 4.0
+          "value": 0.0
         },
         {
           "id": 9,
-          "value": 4.0
+          "value": 0.0
         },
         {
           "id": 10,
-          "value": 4.0
+          "value": 1.29999995
         },
         {
           "id": 11,
-          "value": 4.0
+          "value": 0.0
         },
         {
           "id": 12,
@@ -280,8 +280,7 @@
           "value": 0.0
         }
       ],
-      "leftModuleId": 13,
-      "rightModuleId": 10,
+      "rightModuleId": 3,
       "data": {
         "running": true,
         "gates": [
@@ -296,7 +295,7 @@
         ]
       },
       "pos": [
-        17,
+        0,
         0
       ]
     },
@@ -312,11 +311,11 @@
         },
         {
           "id": 1,
-          "value": 0.59750098
+          "value": 0.437000513
         },
         {
           "id": 2,
-          "value": 0.0
+          "value": 0.0735000074
         },
         {
           "id": 3,
@@ -343,67 +342,18 @@
           "value": 0.0
         }
       ],
-      "leftModuleId": 9,
+      "leftModuleId": 3,
       "rightModuleId": 6,
       "data": {
         "moduleVersion": 1,
-        "currentStep": 22,
-        "shiftPosition": 0,
+        "currentStep": 8,
+        "shiftPosition": 2,
         "clockState": false,
         "runState": true,
         "theme": 0
       },
       "pos": [
-        39,
-        0
-      ]
-    },
-    {
-      "id": 11,
-      "plugin": "Autodafe",
-      "version": "1.0.1",
-      "model": "BPMClock",
-      "params": [
-        {
-          "id": 0,
-          "value": 120.0
-        },
-        {
-          "id": 1,
-          "value": 0.0
-        },
-        {
-          "id": 2,
-          "value": 0.0
-        },
-        {
-          "id": 3,
-          "value": 0.0
-        },
-        {
-          "id": 4,
-          "value": 0.0
-        }
-      ],
-      "rightModuleId": 12,
-      "data": {
-        "bpmint": 120,
-        "bpmdec": 0
-      },
-      "pos": [
-        0,
-        0
-      ]
-    },
-    {
-      "id": 12,
-      "plugin": "Autodafe",
-      "version": "1.0.1",
-      "model": "Multiple18",
-      "params": [],
-      "leftModuleId": 11,
-      "pos": [
-        10,
+        32,
         0
       ]
     },
@@ -418,56 +368,189 @@
           "value": 0.0
         }
       ],
-      "rightModuleId": 9,
+      "leftModuleId": 66,
+      "rightModuleId": 47,
       "data": {
         "sampletype": 2
       },
       "pos": [
-        13,
-        0
+        44,
+        1
+      ]
+    },
+    {
+      "id": 47,
+      "plugin": "Autodafe-DrumKit",
+      "version": "1.0.0",
+      "model": "DrumsSnare",
+      "params": [
+        {
+          "id": 0,
+          "value": 0.0
+        }
+      ],
+      "leftModuleId": 13,
+      "rightModuleId": 57,
+      "data": {
+        "sampletype": 4
+      },
+      "pos": [
+        48,
+        1
+      ]
+    },
+    {
+      "id": 50,
+      "plugin": "Autodafe-DrumKit",
+      "version": "1.0.0",
+      "model": "DrumsHiHatOpen",
+      "params": [
+        {
+          "id": 0,
+          "value": 0.0
+        }
+      ],
+      "leftModuleId": 57,
+      "data": {
+        "sampletype": 2
+      },
+      "pos": [
+        56,
+        1
+      ]
+    },
+    {
+      "id": 57,
+      "plugin": "CountModula",
+      "version": "1.16.0",
+      "model": "BooleanAND",
+      "params": [],
+      "leftModuleId": 47,
+      "rightModuleId": 50,
+      "data": {
+        "moduleVersion": 3,
+        "theme": 0
+      },
+      "pos": [
+        52,
+        1
+      ]
+    },
+    {
+      "id": 59,
+      "plugin": "Fundamental",
+      "version": "1.4.0",
+      "model": "LFO2",
+      "params": [
+        {
+          "id": 0,
+          "value": 1.0
+        },
+        {
+          "id": 1,
+          "value": 1.0
+        },
+        {
+          "id": 2,
+          "value": 3.05199623
+        },
+        {
+          "id": 3,
+          "value": 2.99550009
+        },
+        {
+          "id": 4,
+          "value": 0.5
+        }
+      ],
+      "rightModuleId": 61,
+      "pos": [
+        21,
+        1
+      ]
+    },
+    {
+      "id": 60,
+      "plugin": "CountModula",
+      "version": "1.16.0",
+      "model": "ClockDivider",
+      "params": [
+        {
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "id": 1,
+          "value": 0.0
+        },
+        {
+          "id": 2,
+          "value": 0.0
+        }
+      ],
+      "leftModuleId": 61,
+      "rightModuleId": 65,
+      "data": {
+        "moduleVersion": 2,
+        "count": 407,
+        "mode": 0,
+        "doTrigs": false,
+        "countUp": false,
+        "theme": 0
+      },
+      "pos": [
+        30,
+        1
+      ]
+    },
+    {
+      "id": 61,
+      "plugin": "Autodafe",
+      "version": "1.0.1",
+      "model": "Multiple18",
+      "params": [],
+      "leftModuleId": 59,
+      "rightModuleId": 60,
+      "pos": [
+        27,
+        1
+      ]
+    },
+    {
+      "id": 65,
+      "plugin": "Autodafe",
+      "version": "1.0.1",
+      "model": "Multiple18",
+      "params": [],
+      "leftModuleId": 60,
+      "rightModuleId": 66,
+      "pos": [
+        38,
+        1
+      ]
+    },
+    {
+      "id": 66,
+      "plugin": "Autodafe",
+      "version": "1.0.1",
+      "model": "Multiple18",
+      "params": [],
+      "leftModuleId": 65,
+      "rightModuleId": 13,
+      "pos": [
+        41,
+        1
       ]
     }
   ],
   "cables": [
     {
-      "id": 2,
-      "outputModuleId": 2,
-      "outputId": 0,
-      "inputModuleId": 1,
-      "inputId": 0,
-      "color": "#0986ad"
-    },
-    {
-      "id": 3,
-      "outputModuleId": 2,
-      "outputId": 0,
-      "inputModuleId": 1,
-      "inputId": 1,
-      "color": "#c9b70e"
-    },
-    {
-      "id": 0,
-      "outputModuleId": 9,
+      "id": 11,
+      "outputModuleId": 10,
       "outputId": 1,
-      "inputModuleId": 3,
-      "inputId": 0,
-      "color": "#c91847"
-    },
-    {
-      "id": 9,
-      "outputModuleId": 11,
-      "outputId": 8,
-      "inputModuleId": 12,
-      "inputId": 0,
-      "color": "#0c8e15"
-    },
-    {
-      "id": 10,
-      "outputModuleId": 11,
-      "outputId": 11,
-      "inputModuleId": 10,
-      "inputId": 1,
-      "color": "#0986ad"
+      "inputModuleId": 6,
+      "inputId": 4,
+      "color": "#c9b70e"
     },
     {
       "id": 14,
@@ -478,52 +561,148 @@
       "color": "#c9b70e"
     },
     {
-      "id": 16,
-      "outputModuleId": 12,
+      "id": 15,
+      "outputModuleId": 6,
       "outputId": 0,
+      "inputModuleId": 2,
+      "inputId": 5,
+      "color": "#0c8e15"
+    },
+    {
+      "id": 0,
+      "outputModuleId": 9,
+      "outputId": 1,
+      "inputModuleId": 3,
+      "inputId": 1,
+      "color": "#c91847"
+    },
+    {
+      "id": 199,
+      "outputModuleId": 10,
+      "outputId": 0,
+      "inputModuleId": 6,
+      "inputId": 5,
+      "color": "#c91847"
+    },
+    {
+      "id": 202,
+      "outputModuleId": 47,
+      "outputId": 0,
+      "inputModuleId": 2,
+      "inputId": 3,
+      "color": "#0c8e15"
+    },
+    {
+      "id": 226,
+      "outputModuleId": 59,
+      "outputId": 0,
+      "inputModuleId": 61,
+      "inputId": 0,
+      "color": "#c91847"
+    },
+    {
+      "id": 227,
+      "outputModuleId": 61,
+      "outputId": 0,
+      "inputModuleId": 60,
+      "inputId": 0,
+      "color": "#0986ad"
+    },
+    {
+      "id": 13,
+      "outputModuleId": 65,
+      "outputId": 0,
+      "inputModuleId": 13,
+      "inputId": 0,
+      "color": "#c91847"
+    },
+    {
+      "id": 201,
+      "outputModuleId": 66,
+      "outputId": 0,
+      "inputModuleId": 47,
+      "inputId": 0,
+      "color": "#c9b70e"
+    },
+    {
+      "id": 232,
+      "outputModuleId": 65,
+      "outputId": 1,
+      "inputModuleId": 57,
+      "inputId": 0,
+      "color": "#c9b70e"
+    },
+    {
+      "id": 233,
+      "outputModuleId": 57,
+      "outputId": 1,
+      "inputModuleId": 50,
+      "inputId": 0,
+      "color": "#0c8e15"
+    },
+    {
+      "id": 234,
+      "outputModuleId": 61,
+      "outputId": 2,
+      "inputModuleId": 10,
+      "inputId": 1,
+      "color": "#c91847"
+    },
+    {
+      "id": 16,
+      "outputModuleId": 65,
+      "outputId": 2,
       "inputModuleId": 9,
       "inputId": 1,
       "color": "#c91847"
     },
     {
-      "id": 236,
-      "outputModuleId": 10,
-      "outputId": 0,
-      "inputModuleId": 6,
-      "inputId": 5,
-      "color": "#0986ad"
-    },
-    {
-      "id": 248,
+      "id": 217,
       "outputModuleId": 3,
       "outputId": 0,
       "inputModuleId": 2,
       "inputId": 1,
-      "color": "#0c8e15"
-    },
-    {
-      "id": 250,
-      "outputModuleId": 10,
-      "outputId": 1,
-      "inputModuleId": 6,
-      "inputId": 4,
-      "color": "#0986ad"
-    },
-    {
-      "id": 251,
-      "outputModuleId": 6,
-      "outputId": 0,
-      "inputModuleId": 2,
-      "inputId": 5,
       "color": "#c9b70e"
     },
     {
-      "id": 13,
-      "outputModuleId": 12,
-      "outputId": 7,
-      "inputModuleId": 13,
+      "id": 214,
+      "outputModuleId": 50,
+      "outputId": 0,
+      "inputModuleId": 2,
+      "inputId": 4,
+      "color": "#c9b70e"
+    },
+    {
+      "id": 252,
+      "outputModuleId": 2,
+      "outputId": 0,
+      "inputModuleId": 1,
+      "inputId": 0,
+      "color": "#0986ad"
+    },
+    {
+      "id": 253,
+      "outputModuleId": 2,
+      "outputId": 0,
+      "inputModuleId": 1,
+      "inputId": 1,
+      "color": "#c9b70e"
+    },
+    {
+      "id": 230,
+      "outputModuleId": 60,
+      "outputId": 2,
+      "inputModuleId": 66,
       "inputId": 0,
       "color": "#c91847"
+    },
+    {
+      "id": 229,
+      "outputModuleId": 60,
+      "outputId": 1,
+      "inputModuleId": 65,
+      "inputId": 0,
+      "color": "#0c8e15"
     }
   ]
 }
