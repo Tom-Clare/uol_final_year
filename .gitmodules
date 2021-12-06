@@ -1,0 +1,9 @@
+[submodule "test/test/pyo-tools"]
+	path = test/test/pyo-tools
+	url = https://github.com/belangeo/pyo-tools.git
+[submodule "zyne/pyo-tools"]
+	path = zyne/pyo-tools
+	url = https://github.com/belangeo/pyo-tools.git
+[submodule "zyne/zyne"]
+	path = zyne/zyne
+	url = https://github.com/belangeo/zyne.git

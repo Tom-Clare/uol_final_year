@@ -1,3 +1,8 @@
 keyboard==0.13.5
 numpy==1.19.5
+Pillow==8.4.0
 PyAudio==0.2.11
+pyo==1.0.4
+pyotools==0.1.0
+six==1.16.0
+wxPython==4.0.0
