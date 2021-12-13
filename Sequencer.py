@@ -14,3 +14,20 @@ class Sequencer():
 
     def update(self):
         self._out = self._sequence[self._index]
+
+    # need a way to dictate how the clock in is done
+    def clock_in(self, clock_input):
+        self.clock_input.bind_to(self.measure)
+        self._clock_in = 0
+
+
+    def measure(self, input):
+        # if current == new, nothing
+        # if current != new, update current
+
+        if self._clock_in != input:
+            self._clock_in = input
+            if self._clock_in == 1:
+                self.next()
+        
+
