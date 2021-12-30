@@ -26,7 +26,7 @@ clock.start()
 print("ahhh")
 sequencer.clock_in(clock._out)
 
-## loop gets tuck in Clock - may need to look at subprocessing or multithreading
+## loop gets tuck in Clock - may need to look at subprocessing or multithreading https://stackoverflow.com/questions/2629680/deciding-among-subprocess-multiprocessing-and-thread-in-python
 
 ## the issue here is linking the output of the clock to the sequencer. 
 ## The method needs to be easy and quick. 
