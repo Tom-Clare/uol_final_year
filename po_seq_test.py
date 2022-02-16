@@ -46,7 +46,7 @@ class Sequencer(PyoObject):
         self._in_fader = InputFader(clock)
 
         # Convert all arguements to lists for "multichannel expansion"
-        in_fader, steps, freq = convertArgsToLists(self._in_fader, steps, freq)
+        in_fader, steps, freq, lmax = convertArgsToLists(self._in_fader, steps, freq)
 
         ## Input checks
         # If list of frequencies can't be mapped to steps, re-init values
@@ -55,7 +55,8 @@ class Sequencer(PyoObject):
             self._freq = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
         # Processing
-        self._seq_out = Sine(freq=freq[0])
+        self._seq_out = Sine(freq=freq[self._index])
+        ## when clock == 1 call next()
 
         # self._base_objs is the audio output seen by the outside world
         self._base_objs = self._seq_out.getBaseObjects()
@@ -66,6 +67,16 @@ class Sequencer(PyoObject):
         """
         self._index = 0
         self._seq_out = Sine(freq=self._freq[0])
+
+    def next(self):
+        """
+        Triggers the next step in the sequence
+        """
+        next_index = self._index + 1
+        if next_index > self._steps:
+            next_index = 0  # back to the start
+        self._index = next_index
+        self._seq_out.freq = self._freq[self._index]
 
     def setClock(self, x, fadetime=0.05):
         """
@@ -132,3 +143,22 @@ class Sequencer(PyoObject):
     # http://ajaxsoundstudio.com/pyodoc/tutorials/pyoobject2.html
 
     # Best of luck, future me! :)
+
+    def play(self, dur=0, delay=0):
+        self._seq_out.play(dur, delay)
+        return PyoObject.play(self, dur, delay)
+    
+    def stop(self, wait=0):
+        self._seq_out.stop(wait)
+        return PyoObject.stop(self, wait)
+
+    def out(self, chnl=0, inc=1, dur=0, delay=0):
+        self._seq_out.play(dur, delay)
+        return PyoObject.out(self, chnl, inc, dur, delay)
+
+if __name__ == "__main__":
+    s = Server().boot()
+    clock = Sine(freq=2)
+    seq = Sequencer(clock, 2, [500,1000])
+    sound = Sine(freq=440, add=seq).out()
+    s.gui(locals())
