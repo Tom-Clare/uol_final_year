@@ -1,4 +1,6 @@
+from time import sleep
 from pyo import *
+import threading
 
 class Sequencer(PyoObject):
     """
@@ -57,6 +59,8 @@ class Sequencer(PyoObject):
         # Processing
         self._seq_out = Sine(freq=freq[self._index])
         ## when clock == 1 call next()
+        self._c = threading.Thread(name="clock_in", target=self.listenToClock, daemon=True)
+        self._c.start()
 
         # self._base_objs is the audio output seen by the outside world
         self._base_objs = self._seq_out.getBaseObjects()
@@ -73,7 +77,7 @@ class Sequencer(PyoObject):
         Triggers the next step in the sequence
         """
         next_index = self._index + 1
-        if next_index > self._steps:
+        if next_index > len(self._freq) - 1:
             next_index = 0  # back to the start
         self._index = next_index
         self._seq_out.freq = self._freq[self._index]
@@ -118,6 +122,20 @@ class Sequencer(PyoObject):
         """
         self._freq = x
 
+    def listenToClock(self):
+        """
+        Listen to clock in. Intended for use on a seperate thread.
+        """
+        threshold = 1
+        while(True):
+            
+            if threshold:
+                self.next()
+                threshold = 0
+            else:
+                sleep(0.2)
+                threshold = 1
+
     @property # getter
     def clock(self):
         """PyoObject. Clock source"""
@@ -150,6 +168,7 @@ class Sequencer(PyoObject):
     
     def stop(self, wait=0):
         self._seq_out.stop(wait)
+        self._c.stop()
         return PyoObject.stop(self, wait)
 
     def out(self, chnl=0, inc=1, dur=0, delay=0):
@@ -158,7 +177,7 @@ class Sequencer(PyoObject):
 
 if __name__ == "__main__":
     s = Server().boot()
-    clock = Sine(freq=2)
-    seq = Sequencer(clock, 2, [500,1000])
-    sound = Sine(freq=440, add=seq).out()
+    clock = Sine(freq=0.2)
+    seq = Sequencer(clock.out(), 24, [294, 370, 440, 294, 370, 440, 247, 370, 440, 247, 370, 440, 277, 370, 440, 277, 370, 440, 277, 370, 440, 277, 370, 440])
+    sound = Sine(freq=seq.out()).out()
     s.gui(locals())
