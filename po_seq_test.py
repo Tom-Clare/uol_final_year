@@ -178,6 +178,6 @@ class Sequencer(PyoObject):
 if __name__ == "__main__":
     s = Server().boot()
     clock = Sine(freq=0.2)
-    seq = Sequencer(clock.out(), 24, [294, 370, 440, 294, 370, 440, 247, 370, 440, 247, 370, 440, 277, 370, 440, 277, 370, 440, 277, 370, 440, 277, 370, 440])
-    sound = Sine(freq=seq.out()).out()
+    seq = Sequencer(clock.out(), 24, [294, 370, 440, 294, 370.2, 440, 247, 370, 440, 247, 370, 440, 277, 370, 440, 277, 370, 440, 277, 370, 440, 277, 370, 440])
+    sound = Sine(freq=seq.out()).out() # uninstall pandas
     s.gui(locals())
