@@ -41,6 +41,9 @@ class Sequencer(PyoObject):
         self._steps = steps
         self._freq = freq
 
+        # Create exposed var
+        self._volt = 0
+
         # Setup required vars
         self.resetStep()
 
@@ -176,8 +179,10 @@ class Sequencer(PyoObject):
         return PyoObject.out(self, chnl, inc, dur, delay)
 
 if __name__ == "__main__":
+    from notes import notes
+
     s = Server().boot()
     clock = Sine(freq=0.2)
-    seq = Sequencer(clock.out(), 24, [294, 370, 440, 294, 370.2, 440, 247, 370, 440, 247, 370, 440, 277, 370, 440, 277, 370, 440, 277, 370, 440, 277, 370, 440])
-    sound = Sine(freq=seq.out()).out() # uninstall pandas
+    seq = Sequencer(clock.out(), 24, [notes["D4"], notes["Fs4"], notes["A4"], notes["D4"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"]]).out()
+    #sound = Sine(freq=seq.out()).out()
     s.gui(locals())
