@@ -2,15 +2,14 @@ from time import sleep
 from pyo import *
 import threading
 
-class Sequencer(PyoObject):
+class WavSequencer(PyoObject):
     """
-    Step Sequencer
+    Wav Sequencer
     
-    A step sequencer with modifyable step count and step frequency.
+    A .wav sequencer with modifyable step count and custom .wav file.
     This module is externally clocked. The external clock must reach
     an amplitude of 1 before the next step is triggered, and must
-    pass through 0 before a new step can be triggered again. Output
-    can control oscillator pitch or other CV-controlled modules.
+    pass through 0 before a new step can be triggered again.
 
     :Parent: :py:class:`PyoObject`
 
@@ -18,31 +17,28 @@ class Sequencer(PyoObject):
 
         clock : PyoObject
             External clock source.
-        steps : integer, optional
-            Amount of steps in the sequence.
-            Defaults to 8.
-        freq : array(float), optional
-            Array of frequency values that will be mapped to sequence.
-            Defaults to array of 1hz.
+        file  : string
+            Filename of .wav file to be played.
+        activation_grid : list<bool>
+            List of bools corresponding to when the wav file should play.
 
     >>> s = Server().boot()
     >>> s.start()
     >>> bpm = Sine(2)
-    >>> seq = Sequencer(bpm, 4, [0.5, 1, 1, 2])
-    >>> a = Sine(freq=100, mul=0.2, add=seq).out()
+    >>> kicks = WavSequencer(bpm, "kick.wav", [1,0,1,0]).out()
     """
 
-    def __init__(self, clock, steps=8, freq=[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]):
+    def __init__(self, clock, filename, activation_grid):
         # Initialise PyoObject's basic attributes
         PyoObject.__init__(self)
 
         # Keep references of all raw arguements
         self._clock = clock
-        self._steps = steps
-        self._freq = freq
+        self._filename = filename
+        self._activation_grid = activation_grid
 
         # Create exposed var
-        self._volt = 0
+        #self._volt = 0
 
         # Setup required vars
         self.resetStep()
@@ -51,39 +47,41 @@ class Sequencer(PyoObject):
         self._in_fader = InputFader(clock)
 
         # Convert all arguements to lists for "multichannel expansion"
-        in_fader, steps, freq, lmax = convertArgsToLists(self._in_fader, steps, freq)
+        in_fader, filename, activation_grid, lmax = convertArgsToLists(self._in_fader, filename, activation_grid)
 
         ## Input checks
         # If list of frequencies can't be mapped to steps, re-init values
-        if len(self._freq) < self._steps:
-            self._steps = 8
-            self._freq = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+        #if len(self._freq) < self._steps:
+         #   self._steps = 8
+         #   self._freq = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
         # Processing
-        self._seq_out = Sine(freq=freq[self._index])
+        self._sound_out = SfPlayer(self._filename)
         ## when clock == 1 call next()
         self._c = threading.Thread(name="clock_in", target=self.listenToClock, daemon=True)
         self._c.start()
 
         # self._base_objs is the audio output seen by the outside world
-        self._base_objs = self._seq_out.getBaseObjects()
+        self._base_objs = self._sound_out.getBaseObjects()
 
     def resetStep(self):
         """
         Resets step of sequencer
         """
         self._index = 0
-        self._seq_out = Sine(freq=self._freq[0])
+        #self._seq_out = Sine(freq=self._freq[0])
 
     def next(self):
         """
         Triggers the next step in the sequence
         """
         next_index = self._index + 1
-        if next_index > len(self._freq) - 1:
+        if next_index > len(self._activation_grid) - 1:
             next_index = 0  # back to the start
         self._index = next_index
-        self._seq_out.freq = self._freq[self._index]
+        if self._activation_grid[self._index] == True:
+            # play wav file
+            self._sound_out = SfPlayer(self._filename).out()
 
     def setClock(self, x, fadetime=0.05):
         """
@@ -113,17 +111,17 @@ class Sequencer(PyoObject):
         """
         self._steps = x
         
-    def setFreq(self, x):
-        """
-        Set frequency list
+    # def setFreq(self, x):
+    #     """
+    #     Set frequency list
         
-        :Args:
+    #     :Args:
         
-            x : List
-                List of new frequency values
+    #         x : List
+    #             List of new frequency values
         
-        """
-        self._freq = x
+    #     """
+    #     self._freq = x
 
     def listenToClock(self):
         """
@@ -136,7 +134,7 @@ class Sequencer(PyoObject):
                 self.next()
                 threshold = 0
             else:
-                sleep(0.2)
+                sleep(bpm)
                 threshold = 1
 
     @property # getter
@@ -147,13 +145,13 @@ class Sequencer(PyoObject):
     def clock(self, x):
         self.setClock(x)
 
-    @property # getter
-    def freq(self):
-        """PyoObject. Frequency list"""
-        return self._freq
-    @freq.setter # setter
-    def freq(self, x):
-        self.setFreq(x)
+    # @property # getter
+    # def freq(self):
+    #     """PyoObject. Frequency list"""
+    #     return self._freq
+    # @freq.setter # setter
+    # def freq(self, x):
+    #     self.setFreq(x)
 
     def ctrl(self, map_list=None, title=None, wxnoserver=False):
         ## We may want to create a freq slider for each step (up to 8)
@@ -170,22 +168,21 @@ class Sequencer(PyoObject):
         return PyoObject.play(self, dur, delay)
     
     def stop(self, wait=0):
-        self._seq_out.stop(wait)
+        #self._seq_out.stop(wait)
         self._c.stop()
         return PyoObject.stop(self, wait)
 
     def out(self, chnl=0, inc=1, dur=0, delay=0):
-        self._seq_out.play(dur, delay)
+        #self._seq_out.play(dur, delay)
         return PyoObject.out(self, chnl, inc, dur, delay)
 
 if __name__ == "__main__":
     from notes import notes
 
-    plus_tot = [notes["D4"], notes["Fs4"], notes["A4"], notes["D4"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"]]
-    basic = [notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["G4"],notes["G4"]]
-
     s = Server().boot()
-    clock = Sine(freq=0.2)
-    seq = Sequencer(clock.out(), len(basic), basic).out()
+    clock = Sine(freq=0.01)
+    bpm = 60/120
+    seq = WavSequencer(clock.out(), "sounds/kick.wav", [1,1,1,1]).out()
+    snares = WavSequencer(clock.out(), "sounds/snare.wav", [0,1,0,1]).out()
     #sound = Sine(freq=seq.out()).out()
     s.gui(locals())
