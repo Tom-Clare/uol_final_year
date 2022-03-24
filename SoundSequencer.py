@@ -2,11 +2,11 @@ from time import sleep
 from pyo import *
 import threading
 
-class WavSequencer(PyoObject):
+class SoundSequencer(PyoObject):
     """
-    Wav Sequencer
+    Sound Sequencer
     
-    A .wav sequencer with modifyable step count and custom .wav file.
+    A sound file sequencer with modifyable step count.
     This module is externally clocked. The external clock must reach
     an amplitude of 1 before the next step is triggered, and must
     pass through 0 before a new step can be triggered again.
@@ -18,14 +18,14 @@ class WavSequencer(PyoObject):
         clock : PyoObject
             External clock source.
         file  : string
-            Filename of .wav file to be played.
+            Filename of sound file to be played.
         activation_grid : list<bool>
             List of bools corresponding to when the wav file should play.
 
     >>> s = Server().boot()
     >>> s.start()
-    >>> bpm = Sine(2)
-    >>> kicks = WavSequencer(bpm, "kick.wav", [1,0,1,0]).out()
+    >>> bpm = Sine(60/120)
+    >>> kicks = SoundSequencer(bpm, "kick.wav", [1,0,1,0]).out()
     """
 
     def __init__(self, clock, filename, activation_grid):
@@ -37,9 +37,6 @@ class WavSequencer(PyoObject):
         self._filename = filename
         self._activation_grid = activation_grid
 
-        # Create exposed var
-        #self._volt = 0
-
         # Setup required vars
         self.resetStep()
 
@@ -50,10 +47,6 @@ class WavSequencer(PyoObject):
         in_fader, filename, activation_grid, lmax = convertArgsToLists(self._in_fader, filename, activation_grid)
 
         ## Input checks
-        # If list of frequencies can't be mapped to steps, re-init values
-        #if len(self._freq) < self._steps:
-         #   self._steps = 8
-         #   self._freq = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
         # Processing
         self._sound_out = SfPlayer(self._filename)
@@ -98,30 +91,6 @@ class WavSequencer(PyoObject):
         """
         self._clock = x
         self._in_fader.setClock(x, fadetime)
-    
-    def setSteps(self, x):
-        """
-        Replace step count.
-        
-        :Args:
-        
-            x : Integer
-                New step count
-        
-        """
-        self._steps = x
-        
-    # def setFreq(self, x):
-    #     """
-    #     Set frequency list
-        
-    #     :Args:
-        
-    #         x : List
-    #             List of new frequency values
-        
-    #     """
-    #     self._freq = x
 
     def listenToClock(self):
         """
@@ -182,7 +151,7 @@ if __name__ == "__main__":
     s = Server().boot()
     clock = Sine(freq=0.01)
     bpm = 60/120
-    seq = WavSequencer(clock.out(), "sounds/kick.wav", [1,1,1,1]).out()
-    snares = WavSequencer(clock.out(), "sounds/snare.wav", [0,1,0,1]).out()
+    seq = SoundSequencer(clock.out(), "sounds/kick.wav", [1,1,1,1]).out()
+    snares = SoundSequencer(clock.out(), "sounds/snare.wav", [0,1,0,1]).out()
     #sound = Sine(freq=seq.out()).out()
     s.gui(locals())
