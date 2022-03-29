@@ -27,7 +27,7 @@ s.amp = 0.1
 
 ## mul and add attributes
 a = Sine(freq=200)
-b = Sine(freq=200, mul=0.5, add=0.5).out()
+b = Sine(freq=200, mul=0.5, add=0.5).mix(2).out()
 #c = Sine(freq=100).range(-0.25, 0.5)
 sc = Scope([a, b])
 

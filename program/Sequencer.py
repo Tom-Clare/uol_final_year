@@ -32,13 +32,17 @@ class Sequencer(PyoObject):
     >>> a = Sine(freq=100, mul=0.2, add=seq).out()
     """
 
-    def __init__(self, step_duration, freq=[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]):
+    def __init__(self, step_duration, freq, envelope=None):
         # Initialise PyoObject's basic attributes
         PyoObject.__init__(self)
 
         # Keep references of all raw arguements
         self._step_duration = step_duration
         self._freq = freq
+        if envelope is None: # if no ASDR evelope provided
+            self._envelope = Adsr(attack=.05, decay=0, sustain=1, release=.05, dur=0.15, mul=.5) # default envelope
+        else:
+            self._envelope = envelope
 
         # Create exposed var
         self._volt = 0
@@ -47,10 +51,11 @@ class Sequencer(PyoObject):
         self.resetStep()
 
         # Convert all arguements to lists for "multichannel expansion"
-        freq, lmax = convertArgsToLists( freq)
+        freq, envelope, lmax = convertArgsToLists(freq, envelope)
 
         # Processing
-        self._seq_out = Sine(freq=freq[self._index])
+        self._asdr = Adsr(attack=.05, decay=0, sustain=1, release=.05, dur=0.15, mul=.5)
+        self._seq_out = Sine(freq=freq[self._index], mul=self._envelope)
 
         # Begin module's internal clock on a seperate thread
         self._internal_clock = threading.Thread(name="clock", target=self.clock, daemon=True)
@@ -75,6 +80,8 @@ class Sequencer(PyoObject):
             next_index = 0  # back to the start
         self._index = next_index
         self._seq_out.freq = self._freq[self._index]
+        if self._freq[self._index] != 0:
+            self._envelope.play()
         
     def setFreq(self, x):
         """

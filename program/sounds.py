@@ -3,12 +3,15 @@ from Sequencer import Sequencer
 from SoundSequencer import SoundSequencer
 from notes import notes
 
-plus_tot = [notes["D4"], notes["Fs4"], notes["A4"], notes["D4"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"]]
+# plus_tot = [notes["D4"], notes["Fs4"], notes["A4"], notes["D4"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"]]
 
-s = Server().boot()
-bpm = 60/220
-seq = Sequencer(bpm, plus_tot).out()
-s.gui(locals())
+# s = Server().boot()
+# bpm = 60/220
+# seq = Sequencer(bpm, plus_tot).mis(2).out()
+# mix() will mix the signal into two channel, left and right.
+# out() plays the sound to the audio output (speakers)
+# These are both Pyo characteristics
+# s.gui(locals())
 
 #####################################
 
@@ -33,12 +36,20 @@ s.gui(locals())
 
 ######################################
 
+basic = [notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["G4"],notes["G4"]]
+basic_bass = [notes["A2"],notes["A2"],notes["A2"],notes["A2"],notes["A2"],notes["A2"],notes["G2"],notes["G2"]]
 
-# basic = [notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["G4"],notes["G4"]]
-
-# s = Server().boot()
-# bpm = 60/120
-# seq = Sequencer(bpm, basic).out()
-# seq = SoundSequencer(bpm, "sounds/kick.wav", [1,1,1,1]).out()
-# snares = SoundSequencer(bpm, "sounds/snare.wav", [0,1,0,1]).out()
-# s.gui(locals())
+s = Server().boot()
+bpm1 = 60/120
+asdr = Adsr(attack=.05, decay=0, sustain=1, release=.05, dur=0.15, mul=.5)
+seq = Sequencer(bpm1, basic).mix(2).out() # can provide with or without envelope
+#bass = Sequencer(bpm1, basic_bass, mul=0.2).mix(2).out()
+#kick = SoundSequencer(bpm1, "sounds/kick.wav", [1,0,1,0]).out()
+#snares = SoundSequencer(bpm1, "sounds/snare.wav", [0,1,0,1]).out()
+bpm2 = 60/240
+#hihats = SoundSequencer(bpm2, "sounds/hihat.wav", [1,1,1,1,1,1,1,1]).out()
+bpm3 = 60/520
+#perc1 = SoundSequencer(bpm3, "sounds/perc1.wav", [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).out()
+#perc2 = SoundSequencer(bpm3, "sounds/perc2.wav", [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).out()
+#perc3 = SoundSequencer(bpm3, "sounds/perc3.wav", [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).out()
+s.gui(locals())
