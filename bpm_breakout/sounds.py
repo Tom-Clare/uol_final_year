@@ -1,6 +1,7 @@
 from pyo import *
-from Sequencer import Sequencer
-from SoundSequencer import SoundSequencer
+from Sequencer_ext import Sequencer
+from SoundSequencer_ext import SoundSequencer
+from BPM import BPM
 from notes import notes
 
 # plus_tot = [notes["D4"], notes["Fs4"], notes["A4"], notes["D4"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["B3"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"], notes["Cs4"], notes["Fs4"], notes["A4"]]
@@ -58,10 +59,9 @@ from notes import notes
 ## Simple Patch
 
 s = Server().boot()
-bpm1 = 60/100
-bpm2 = 60/200
-kicks = SoundSequencer(bpm2, "sounds/lofi1.wav", [1,0,1,0,1,0,1,0]).out()
-hihats = SoundSequencer(bpm2, "sounds/hihat.wav", [1,1,1,1,1,1,1,1]).out()
+kicks = SoundSequencer("sounds/lofi1.wav", [1,0,1,0,1,0,1,0]).out()
+hihats = SoundSequencer("sounds/hihat.wav", [1,1,1,1,1,1,1,1]).out()
+bpm = BPM(250, [kicks.next, hihats.next])
 
 ## uh, problem...the hihat and kick are becoming out of time, after like 7 or 8 bars. No clue why, but it isn't the length of the sample
 ## hopefully it's something to do with the bpm?
