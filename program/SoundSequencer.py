@@ -27,7 +27,7 @@ class SoundSequencer(PyoObject):
     >>> kicks = SoundSequencer(bpm, "kick.wav", [1,0,1,0]).out()
     """
 
-    def __init__(self, step_duration, filename, activation_grid):
+    def __init__(self, step_duration, filename, activation_grid, channel=None):
         # Initialise PyoObject's basic attributes
         PyoObject.__init__(self)
 
@@ -35,12 +35,18 @@ class SoundSequencer(PyoObject):
         self._step_duration = step_duration
         self._filename = filename
         self._activation_grid = activation_grid
+        if channel == None: # if no channel given
+            self._channel = 0
+            self._inc = 1 # use mono out
+        else: # if custom channel given
+            self._channel = channel
+            self._inc = 2 # use stereo out
 
         # Setup required vars
         self.resetStep()
 
         # Convert all arguements to lists for "multichannel expansion"
-        step_duration, filename, activation_grid, lmax = convertArgsToLists(step_duration, filename, activation_grid)
+        step_duration, filename, activation_grid, channel, lmax = convertArgsToLists(step_duration, filename, activation_grid, channel)
 
         ## Input checks
         ###### perform sanity checks here ###########################################################
@@ -71,7 +77,7 @@ class SoundSequencer(PyoObject):
         self._index = next_index
         if self._activation_grid[self._index] == True:
             # play sound file
-            self._sound_out = SfPlayer(self._filename).out()
+            self._sound_out = SfPlayer(self._filename).out(self._channel, self._inc) # play sound with custom channel parameters
     
     def setSteps(self, x):
         """
@@ -118,7 +124,7 @@ class SoundSequencer(PyoObject):
     # Best of luck, future me! :)
 
     def play(self, dur=0, delay=0):
-        self._sound_out.play(dur, delay)
+        self._sound_out.play(dur, delay).out(self._channel)
         return PyoObject.play(self, dur, delay)
     
     def stop(self, wait=0):
