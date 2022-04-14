@@ -37,7 +37,7 @@ from notes import notes
 
 ######################################
 
-# basic = [notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["G4"],notes["G4"]]
+basic = [notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["A4"],notes["G4"],notes["G4"]]
 # basic_bass = [notes["A2"],notes["A2"],notes["A2"],notes["A2"],notes["A2"],notes["A2"],notes["G2"],notes["G2"]]
 
 # s = Server().boot()
@@ -59,9 +59,11 @@ from notes import notes
 ## Simple Patch
 
 s = Server().boot()
-kicks = SoundSequencer("sounds/lofi1.wav", [1,0,1,0,1,0,1,0]).out()
-hihats = SoundSequencer("sounds/hihat.wav", [1,1,1,1,1,1,1,1]).out()
-bpm = BPM(250, [kicks.next, hihats.next])
+s.setAmp(0.4)
+kicks = SoundSequencer("sounds/lofi1.wav", [1,1,1,1], 2).out()
+hihats = SoundSequencer("sounds/hihat.wav", [1,1,1,1,1,1,1,1], 1).out()
+synth = Sequencer(basic, 1).out()
+bpm = BPM(250, [kicks, hihats, synth])
 
 ## uh, problem...the hihat and kick are becoming out of time, after like 7 or 8 bars. No clue why, but it isn't the length of the sample
 ## hopefully it's something to do with the bpm?

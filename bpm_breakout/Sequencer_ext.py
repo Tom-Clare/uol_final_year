@@ -32,34 +32,31 @@ class Sequencer(PyoObject):
     >>> a = Sine(freq=100, mul=0.2, add=seq).out()
     """
 
-    def __init__(self, step_duration, freq, envelope=None):
+    def __init__(self, freq, resolution, envelope=None):
         # Initialise PyoObject's basic attributes
         PyoObject.__init__(self)
 
         # Keep references of all raw arguements
-        self._step_duration = step_duration
         self._freq = freq
+        self._resolution = resolution
         if envelope is None: # if no ASDR evelope provided
             self._envelope = Adsr(attack=.05, decay=0, sustain=1, release=.05, dur=0.15, mul=.5) # default envelope
         else:
             self._envelope = envelope
 
-        # Create exposed var
-        self._volt = 0
-
         # Setup required vars
         self.resetStep()
 
         # Convert all arguements to lists for "multichannel expansion"
-        freq, envelope, lmax = convertArgsToLists(freq, envelope)
+        freq, resolution, envelope, lmax = convertArgsToLists(freq, resolution, envelope)
 
         # Processing
         self._asdr = Adsr(attack=.05, decay=0, sustain=1, release=.05, dur=0.15, mul=.5)
         self._seq_out = Sine(freq=freq[self._index], mul=self._envelope)
 
         # Begin module's internal clock on a seperate thread
-        self._internal_clock = threading.Thread(name="clock", target=self.clock, daemon=True)
-        self._internal_clock.start()
+        # self._internal_clock = threading.Thread(name="clock", target=self.clock, daemon=True)
+        # self._internal_clock.start()
 
         # self._base_objs is the audio output seen by the outside world
         self._base_objs = self._seq_out.getBaseObjects()
@@ -95,19 +92,19 @@ class Sequencer(PyoObject):
         """
         self._freq = x
 
-    def clock(self):
-        """
-        Listen to clock in. Intended for use on a seperate thread.
-        """
-        threshold = 1
-        while(True):
+    # def clock(self):
+    #     """
+    #     Listen to clock in. Intended for use on a seperate thread.
+    #     """
+    #     threshold = 1
+    #     while(True):
             
-            if threshold:
-                self.next()
-                threshold = 0
-            else:
-                sleep(self._step_duration)
-                threshold = 1
+    #         if threshold:
+    #             self.next()
+    #             threshold = 0
+    #         else:
+    #             sleep(self._step_duration)
+    #             threshold = 1
 
     @property # getter
     def step_duration(self):
@@ -139,7 +136,7 @@ class Sequencer(PyoObject):
     
     def stop(self, wait=0):
         self._seq_out.stop(wait)
-        self._internal_clock.stop()
+        # self._internal_clock.stop()
         return PyoObject.stop(self, wait)
 
     def out(self, chnl=0, inc=1, dur=0, delay=0):

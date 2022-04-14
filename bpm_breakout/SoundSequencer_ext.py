@@ -13,32 +13,33 @@ class SoundSequencer(PyoObject):
 
     :Args:
 
-        step_duration : PyoObject
-            Step duration for each step in activation_grid
         file  : string
             Filename of sound file to be played.
         activation_grid : list<bool>
             List of bools corresponding to when the wav file should play.
+        resolution : int
+            How many BPM ticks are required to increment current position of the activation grid pointer.
 
     >>> s = Server().boot()
     >>> s.start()
     >>> bpm = Sine(60/120)
-    >>> kicks = SoundSequencer(bpm, "kick.wav", [1,0,1,0]).out()
+    >>> kicks = SoundSequencer("kick.wav", [1,0,1,0]).out()
     """
 
-    def __init__(self, filename, activation_grid):
+    def __init__(self, filename, activation_grid, resolution):
         # Initialise PyoObject's basic attributes
         PyoObject.__init__(self)
 
         # Keep references of all raw arguements
         self._filename = filename
         self._activation_grid = activation_grid
+        self._resolution = resolution
 
         # Setup required vars
         self.resetStep()
 
         # Convert all arguements to lists for "multichannel expansion"
-        filename, activation_grid, lmax = convertArgsToLists(filename, activation_grid)
+        filename, activation_grid, resolution, lmax = convertArgsToLists(filename, activation_grid, resolution)
 
         ## Input checks
         ###### perform sanity checks here ###########################################################

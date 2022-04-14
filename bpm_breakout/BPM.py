@@ -12,13 +12,17 @@ class BPM:
         
 
     def go(self):
+        counter = 0
+
         threshold = 1
         while(True):
             
             if threshold:
+                counter += 1
                 # make callbacks
-                for func_next in self._subscribers:
-                    func_next()
+                for subscriber in self._subscribers:
+                    if counter % subscriber._resolution == 0:
+                        subscriber.next()
                 threshold = 0
             else:
                 sleep(self._duration)
