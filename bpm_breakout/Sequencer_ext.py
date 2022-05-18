@@ -40,6 +40,7 @@ class Sequencer(PyoObject):
         # Keep references of all raw arguements
         #self._step_duration = step_duration
         self._freq = freq
+        self._resolution = resolution
         if envelope is None: # if no ASDR evelope provided
             self._envelope = Adsr(attack=.0018, decay=0, sustain=1, release=.04, dur=0.1, mul=mul) # default envelope
         else:
@@ -53,7 +54,7 @@ class Sequencer(PyoObject):
         self._index = 0
 
         # Convert all arguements to lists for "multichannel expansion"
-        freq, envelope, lmax = convertArgsToLists(freq, envelope)
+        freq, resolution, envelope, lmax = convertArgsToLists(freq, resolution, envelope)
 
         # Processing
         #self._asdr = Adsr(attack=.05, decay=0, sustain=1, release=.05, dur=0.15, mul=.5)
