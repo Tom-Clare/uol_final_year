@@ -26,13 +26,14 @@ class SoundSequencer(PyoObject):
     >>> kicks = SoundSequencer(bpm, "kick.wav", [1,0,1,0]).out()
     """
 
-    def __init__(self, filename, activation_grid):
+    def __init__(self, filename, activation_grid, mul=1.0):
         # Initialise PyoObject's basic attributes
         PyoObject.__init__(self)
 
         # Keep references of all raw arguements
         self._filename = filename
         self._activation_grid = activation_grid
+        self._mul = mul
 
         # Setup required vars
         self.resetStep()
@@ -66,7 +67,7 @@ class SoundSequencer(PyoObject):
         self._index = next_index
         if self._activation_grid[self._index] == True:
             # play sound file
-            self._sound_out = SfPlayer(self._filename).out()
+            self._sound_out = SfPlayer(self._filename, mul=self._mul).mix(2).out()
     
     def setSteps(self, x):
         """
@@ -105,5 +106,5 @@ class SoundSequencer(PyoObject):
     def stop(self, wait=0):
         return PyoObject.stop(self, wait)
 
-    def out(self, chnl=0, inc=1, dur=0, delay=0):
+    def out(self, chnl=0, inc=0, dur=0, delay=0):
         return PyoObject.out(self, chnl, inc, dur, delay)

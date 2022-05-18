@@ -59,9 +59,9 @@ from notes import notes
 
 s = Server().boot()
 bpm1 = 60/100
-bpm2 = 60/200
-kicks = SoundSequencer(bpm2, "sounds/lofi1.wav", [1,0,1,0,1,0,1,0]).out()
-hihats = SoundSequencer(bpm2, "sounds/hihat.wav", [1,1,1,1,1,1,1,1]).out()
+bpm2 = 60/248
+kicks = SoundSequencer(bpm2, "sounds/kick.wav", [1,0,1,0,1,0,1,0]).out()
+hihats = SoundSequencer(bpm2, "sounds/hat.wav", [1,1,1,1,1,1,1,1]).out()
 
 ## uh, problem...the hihat and kick are becoming out of time, after like 7 or 8 bars. No clue why, but it isn't the length of the sample
 ## hopefully it's something to do with the bpm?

@@ -1,5 +1,5 @@
 from pyo import *
-from Sequencer_ext import Sequencer
+from Sequencer_ext import Sequencer as Sequencer2
 from SoundSequencer_ext import SoundSequencer
 from BPM import BPM
 from notes import notes
@@ -58,11 +58,40 @@ from notes import notes
 ########################################
 ## Simple Patch
 
-s = Server().boot()
-kicks = SoundSequencer("sounds/lofi1.wav", [1,0,1,0,1,0,1,0]).out()
-hihats = SoundSequencer("sounds/hihat.wav", [1,1,1,1,1,1,1,1]).out()
-bpm = BPM(250, [kicks.next, hihats.next])
+# s = Server().boot()
+# kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0])
+# hihats = SoundSequencer("sounds/hat2.wav", [1,1,1,1,1,1,1,1])
+# bpm = BPM(248, [kicks.next, hihats.next])
 
-## uh, problem...the hihat and kick are becoming out of time, after like 7 or 8 bars. No clue why, but it isn't the length of the sample
-## hopefully it's something to do with the bpm?
+# mixer = Mixer(outs=1, chnls=1)
+# mixer.addInput(0, kicks)
+# mixer.addInput(1, hihats)
+# mixer.setAmp(1,0, 0.5)
+# mixer.out()
+
+# s.gui(locals())
+
+
+## simple offbeat with hihat
+s = Server().boot()
+kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
+snares = SoundSequencer("sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
+ohats = SoundSequencer("sounds/ohat.wav", [0,1,0,1,0,1,0,1], 0.3)
+#[0,0,109,0,0,0,109,0,0,109,0,0,109,0,0,109,0,0,109,0,0,0,109,0,0,109,0,0,109,0,0,109]
+bass = Sequencer2([0,notes['D2'],0,notes['D2'],0,notes['D2'],0,notes['D2']], mul=0.3)
+bass_mix = bass.mix(2).out()
+#kicks.next, snares.next, ohats.next, 
+bpm = BPM(252, [kicks.next, snares.next, ohats.next, bass.next])
+
+# mixer = Mixer(outs=1, chnls=1)
+# mixer.addInput(0, kicks)
+# mixer.addInput(1, snares)
+# mixer.addInput(2, ohats)
+# mixer.addInput(3, bass)
+# #mixer.setAmp(1, 0, .1)
+# #mixer.setAmp(2, 0, .1)
+# print(mixer.getChannels())
+# mixer.ctrl()
+# mixer.out()
+
 s.gui(locals())
