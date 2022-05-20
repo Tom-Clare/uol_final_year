@@ -346,7 +346,7 @@
       "rightModuleId": 6,
       "data": {
         "moduleVersion": 1,
-        "currentStep": 7,
+        "currentStep": 0,
         "shiftPosition": 0,
         "clockState": true,
         "runState": true,
@@ -492,7 +492,7 @@
       "rightModuleId": 65,
       "data": {
         "moduleVersion": 2,
-        "count": 338,
+        "count": 344,
         "mode": 0,
         "doTrigs": false,
         "countUp": false,

@@ -71,27 +71,31 @@ from notes import notes
 
 # s.gui(locals())
 
-
+########################################
 ## simple offbeat with hihat
-s = Server().boot()
-kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
-snares = SoundSequencer("sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
-ohats = SoundSequencer("sounds/ohat.wav", [0,1,0,1,0,1,0,1], 0.3)
-#[0,0,109,0,0,0,109,0,0,109,0,0,109,0,0,109,0,0,109,0,0,0,109,0,0,109,0,0,109,0,0,109]
-bass = Sequencer2([0,notes['D2'],0,notes['D2'],0,notes['D2'],0,notes['D2']], mul=0.3)
-bass_mix = bass.mix(2).out()
-#kicks.next, snares.next, ohats.next, 
-bpm = BPM(252, [kicks.next, snares.next, ohats.next, bass.next])
+# s = Server().boot()
+# kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
+# snares = SoundSequencer("sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
+# ohats = SoundSequencer("sounds/ohat.wav", [0,1,0,1,0,1,0,1], 0.3)
+# bass = Sequencer2([0,notes['D2'],0,notes['D2'],0,notes['D2'],0,notes['D2']], mul=0.3)
+# bass_mix = bass.mix(2).out()
+# bpm = BPM(252, [kicks.next, snares.next, ohats.next, bass.next])
 
-# mixer = Mixer(outs=1, chnls=1)
-# mixer.addInput(0, kicks)
-# mixer.addInput(1, snares)
-# mixer.addInput(2, ohats)
-# mixer.addInput(3, bass)
-# #mixer.setAmp(1, 0, .1)
-# #mixer.setAmp(2, 0, .1)
-# print(mixer.getChannels())
-# mixer.ctrl()
-# mixer.out()
+# s.gui(locals())
+
+########################################
+## 
+
+########################################
+## breakbeat with reverb lead
+s = Server().boot()
+kicks = SoundSequencer("sounds/kick.wav", [1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0], 0.4)
+snares = SoundSequencer("sounds/snare.wav", [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0], 0.4)
+ohats = SoundSequencer("sounds/hat.wav", [1,1,1,1,1,1,1,1], 0.05)
+bass = Sequencer2([notes['D4'],0,0,0,0,0,0,0,notes['D4'],0,0,0,0,0,0,0,notes['D4'],0,0,0,0,0,0,0,notes['D4'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0], mul=0.3)
+bass_mix = bass.mix(2).out()
+
+reverb = Freeverb(bass, size=0.9).mix(2).out()
+bpm = BPM(570, [kicks.next, snares.next, ohats.next, bass.next])
 
 s.gui(locals())

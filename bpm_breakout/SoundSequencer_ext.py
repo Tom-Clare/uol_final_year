@@ -81,14 +81,6 @@ class SoundSequencer(PyoObject):
         """
         self._steps = x
 
-    @property # getter
-    def step_duration(self):
-        """PyoObject. step_duration value"""
-        return self._step_duration
-    @step_duration.setter # setter
-    def step_duration(self, x):
-        self.set_step_duration(x)
-
     def ctrl(self, map_list=None, title=None, wxnoserver=False):
         ## We may want to create a freq slider for each step (up to 8)
         #self._map_list = [SLMap(10, 2000, "log", "freq", self._freq), SLMapMul(self._mul)]
