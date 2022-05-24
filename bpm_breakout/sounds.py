@@ -60,42 +60,36 @@ from notes import notes
 
 # s = Server().boot()
 # kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0])
-# hihats = SoundSequencer("sounds/hat2.wav", [1,1,1,1,1,1,1,1])
+# hihats = SoundSequencer("sounds/hat2.wav", [1,1,1,1,1,1,1,1], 0.5)
 # bpm = BPM(248, [kicks.next, hihats.next])
-
-# mixer = Mixer(outs=1, chnls=1)
-# mixer.addInput(0, kicks)
-# mixer.addInput(1, hihats)
-# mixer.setAmp(1,0, 0.5)
-# mixer.out()
 
 # s.gui(locals())
 
 ########################################
 ## simple offbeat with hihat
-# s = Server().boot()
-# kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
-# snares = SoundSequencer("sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
-# ohats = SoundSequencer("sounds/ohat.wav", [0,1,0,1,0,1,0,1], 0.3)
-# bass = Sequencer2([0,notes['D2'],0,notes['D2'],0,notes['D2'],0,notes['D2']], mul=0.3)
-# bass_mix = bass.mix(2).out()
-# bpm = BPM(252, [kicks.next, snares.next, ohats.next, bass.next])
+s = Server().boot()
+kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
+snares = SoundSequencer("sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
+ohats = SoundSequencer("sounds/ohat.wav", [0,1,0,1,0,1,0,1], 0.3)
+bass = Sequencer2([0,notes['D2'],0,notes['D2'],0,notes['D2'],0,notes['D2']], mul=0.3)
+bass_mix = bass.mix(2).out()
+bpm = BPM(252, [kicks.next, snares.next, ohats.next, bass.next])
 
-# s.gui(locals())
+s.gui(locals())
 
 ########################################
 ## 
 
 ########################################
 ## breakbeat with reverb lead
-s = Server().boot()
-kicks = SoundSequencer("sounds/kick.wav", [1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0], 0.4)
-snares = SoundSequencer("sounds/snare.wav", [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0], 0.4)
-ohats = SoundSequencer("sounds/hat.wav", [1,1,1,1,1,1,1,1], 0.05)
-bass = Sequencer2([notes['D4'],0,0,0,0,0,0,0,notes['D4'],0,0,0,0,0,0,0,notes['D4'],0,0,0,0,0,0,0,notes['D4'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0], mul=0.3)
-bass_mix = bass.mix(2).out()
+# s = Server().boot()
+# kicks = SoundSequencer("sounds/kick.wav", [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0], 0.6)
+# snares = SoundSequencer("sounds/snare.wav", [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0], 0.6)
+# ohats = SoundSequencer("sounds/hat.wav", [1,1,1,1,1,1,1,1], 0.15)
+# bass = Sequencer2([notes['D4'],0,0,0,0,0,0,0,notes['D4'],0,0,0,0,0,0,0,notes['D4'],0,0,0,0,0,0,0,notes['D4'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0,notes['G3'],0,0,0,0,0,0,0], mul=0.3)
+# bass_mix = bass.mix(2).out()
 
-reverb = Freeverb(bass, size=0.9).mix(2).out()
-bpm = BPM(570, [kicks.next, snares.next, ohats.next, bass.next])
+# reverb = Freeverb(bass, size=0.9).mix(2).out()
+# bpm = BPM(570, [kicks.next, snares.next, ohats.next, bass.next])
 
-s.gui(locals())
+# s.gui(locals())
