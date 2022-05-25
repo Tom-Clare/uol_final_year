@@ -21,7 +21,6 @@ class BPM:
                 counter += 1
                 # make callbacks
                 for func_next in self._func_next:
-                    #if counter % subscriber._resolution == 0: ## what is this checking for?
                     func_next()
                 threshold = 0
             else:

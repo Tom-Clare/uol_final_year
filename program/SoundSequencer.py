@@ -14,16 +14,16 @@ class SoundSequencer(PyoObject):
     :Args:
 
         file  : string
-            Filename of sound file to be played.
+            Filename of sound file to be played. Can be relative or absolute filepath.
         activation_grid : list<bool>
             List of bools corresponding to when the wav file should play.
-        resolution : int
-            How many BPM ticks are required to increment current position of the activation grid pointer.
+        mul : float, optional
+            How loudy to play the file.
 
     >>> s = Server().boot()
-    >>> s.start()
-    >>> bpm = Sine(60/120)
-    >>> kicks = SoundSequencer("kick.wav", [1,0,1,0]).out()
+    >>> kicks = SoundSequencer("kick.wav", [1,0,1,0], 0.5).out()
+    >>> bpm = BPM(120, [kick.next])
+    >>> s.gui(locals())
     """
 
     def __init__(self, filename, activation_grid, mul=1.0):
@@ -40,9 +40,6 @@ class SoundSequencer(PyoObject):
 
         # Convert all arguements to lists for "multichannel expansion"
         filename, activation_grid, lmax = convertArgsToLists(filename, activation_grid)
-
-        ## Input checks
-        ###### perform sanity checks here ###########################################################
 
         # Processing
         self._sound_out = SfPlayer(self._filename)
@@ -66,30 +63,13 @@ class SoundSequencer(PyoObject):
             next_index = 0  # back to the start
         self._index = next_index
         if self._activation_grid[self._index] == True:
-            # play sound file
+            # play sound file with given mul value, mixed to two channels
             self._sound_out = SfPlayer(self._filename, mul=self._mul).mix(2).out()
-    
-    def setSteps(self, x):
-        """
-        Replace step count.
-        
-        :Args:
-        
-            x : Integer
-                New step count
-        
-        """
-        self._steps = x
 
     def ctrl(self, map_list=None, title=None, wxnoserver=False):
         ## We may want to create a freq slider for each step (up to 8)
         #self._map_list = [SLMap(10, 2000, "log", "freq", self._freq), SLMapMul(self._mul)]
         PyoObject.ctrl(self, map_list, title, wxnoserver)
-
-    ## following this tutorial:
-    # http://ajaxsoundstudio.com/pyodoc/tutorials/pyoobject2.html
-
-    # Best of luck, future me! :)
 
     def play(self, dur=0, delay=0):
         self._sound_out.play(dur, delay)
