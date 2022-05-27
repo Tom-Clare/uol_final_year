@@ -1,7 +1,84 @@
 # Final Year Project
 Final year project for my Computer Science Undergraduate Degree at the University of Lincoln
 
+This project aims to provide an easy to use musical synthesis program. The music can be made in such a way that it can integrate with other programmatic events, responding to and triggering code from other sources.
+
 This project is built on Pyo, an audio synthesis toolkit which leverages C-binding techniques to achieve the speed necessary for multi-channel audio synthesis. This readme file will take a look at a few code examples for this project and break them down, explaining both Pyo concepts and some of the classes introduced in this project. It is recommended that you have at least a casual understanding of Pyo before working with this project. The Pyo documentation can be found [here](http://ajaxsoundstudio.com/pyodoc/).
+
+# Classes
+
+Here the reader will find the docstrings for each class introduced with this project. Some examples are included as part of the docstring, but clearer and perhaps more usable examples are included in the examples section.
+
+## SoundSequencer
+
+A sound file sequencer with modifyable step count.
+This module is externally clocked.
+
+:Parent: :py:class:`PyoObject`
+
+:Args:
+
+    file  : string
+        Filename of sound file to be played. Can be relative or absolute filepath.
+    activation_grid : list<bool>
+        List of bools corresponding to when the wav file should play.
+    mul : float, optional
+        How loudy to play the file.
+
+>>> s = Server().boot()
+>>> kicks = SoundSequencer("kick.wav", [1,0,1,0], 0.5).out()
+>>> bpm = BPM(120, [kick.next])
+>>> s.gui(locals())
+
+## Sequencer
+
+A sequencer with modifyable step count and step frequency.
+This module is externally clocked. Output is a sine wave,
+but this class could be further modified to output other
+types of wave.
+
+:Parent: :py:class:`PyoObject`
+
+:Args:
+    freq : array<float>
+        Array of frequency values that will be mapped to sequence.
+    envelope : ASDR object, optional
+        Envelope to be retriggered at the start of each note.
+        Defaults to Adsr(attack=.0018, decay=0, sustain=1, release=.04, dur=0.1, mul=mul)
+    mul : float, optional
+        Volume of notes.
+        Defaults to 1.0
+
+
+>>> s = Server().boot()
+>>> envelope = Adsr(attack=.01, decay=0, sustain=1, release=.5, dur=0.2)
+>>> seq = Sequencer([0.5, 1, 1, 2], envelope, 0.3)
+>>> bpm = BPM(120, [seq.next])
+>>> s.gui(locals())
+
+## BPM
+
+This class creates an internal "tick" and will call supplied
+functions on each tick. This class could be further modified
+to accept a list of modulo's and only call each specific
+callback function when the corresponding modulo operator is 
+equal to zero.
+
+:Parent: :py:class:`PyoObject`
+
+:Args:
+    rate : int or float
+        Number of ticks per minute
+    func_next : list<callback functions>
+        List of functions to call on each new tick.
+
+
+>>> s = Server().boot()
+
+>>> seq = Sequencer([440, 440, 440, 440])
+>>> bpm = BPM(120, [seq.next])
+
+>>> s.gui(locals())
 
 # Examples
 
