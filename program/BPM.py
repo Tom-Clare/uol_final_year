@@ -38,14 +38,8 @@ class BPM:
         
 
     def go(self):
-        threshold = 1
 
         while(True):
-            if threshold:
-                # make callbacks
-                for func_next in self._func_next:
-                    func_next() # call callback
-                threshold = 0
-            else:
-                sleep(self._duration) # pause for tick interval
-                threshold = 1
+            for func_next in self._func_next:
+                func_next() # call callback
+            sleep(self._duration) # pause for tick interval
