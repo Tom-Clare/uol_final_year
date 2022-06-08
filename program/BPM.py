@@ -12,13 +12,10 @@ class BPM:
         
 
     def go(self):
-        counter = 0
-
         threshold = 1
+
         while(True):
-            
             if threshold:
-                counter += 1
                 # make callbacks
                 for func_next in self._func_next:
                     func_next()

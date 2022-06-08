@@ -41,15 +41,15 @@ from notes import notes
 
 ########################################
 ## simple offbeat with hihat
-s = Server().boot()
+# s = Server().boot()
 
-kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
-snares = SoundSequencer("sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
-ohats = SoundSequencer("sounds/ohat.wav", [0,1,0,1,0,1,0,1], 0.3)
+# kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
+# snares = SoundSequencer("sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
+# ohats = SoundSequencer("sounds/ohat.wav", [0,1,0,1,0,1,0,1], 0.3)
 
-bpm = BPM(252, [kicks.next, snares.next, ohats.next])
+# bpm = BPM(252, [kicks.next, snares.next, ohats.next])
 
-s.gui(locals())
+# s.gui(locals())
 
 ########################################
 ## simple offbeat with hihat and bass
