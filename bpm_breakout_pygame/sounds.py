@@ -68,9 +68,9 @@ from notes import notes
 ########################################
 ## simple offbeat with hihat
 s = Server().boot()
-kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
-snares = SoundSequencer("sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
-ohats = SoundSequencer("sounds/ohat.wav", [0,1,0,1,0,1,0,1], 0.3)
+kicks = SoundSequencer("./sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
+snares = SoundSequencer("./sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
+ohats = SoundSequencer("./sounds/ohat.wav", [0,1,0,1,0,1,0,1], 0.3)
 bass = Sequencer2([0,notes['D2'],0,notes['D2'],0,notes['D2'],0,notes['D2']], mul=0.3)
 bass_mix = bass.mix(2).out()
 bpm = BPM(252, [kicks.next, snares.next, ohats.next, bass.next])

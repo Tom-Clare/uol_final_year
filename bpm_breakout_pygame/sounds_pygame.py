@@ -42,9 +42,6 @@ def GameLoop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 carryOn = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_x:
-                    carryOn = False
 
         all_sprites_list.update()
 
@@ -69,9 +66,9 @@ gameloop.start()
 ## simple offbeat with hihat
 s = Server().boot()
 
-kicks = SoundSequencer("sounds/kick.wav", [1,0,1,0,1,0,1,0], 0.4)
-snares = SoundSequencer("sounds/snare.wav", [0,0,1,0,0,0,1,0], 0.4)
-ohats = SoundSequencer("sounds/hat.wav", [1,1,1,1,1,1,1,1], 0.3)
+kicks = SoundSequencer(r"C:\Users\GLaDOS MkII\Documents\uni\projects\third_year\final_proj\project\sounds\kick.wav", [1,0,1,0,1,0,1,0], 0.4)
+snares = SoundSequencer(r"C:\Users\GLaDOS MkII\Documents\uni\projects\third_year\final_proj\project\sounds\snare.wav", [0,0,1,0,0,0,1,0], 0.4)
+ohats = SoundSequencer(r"C:\Users\GLaDOS MkII\Documents\uni\projects\third_year\final_proj\project\sounds\hat.wav", [1,1,1,1,1,1,1,1], 0.3)
 bass = Sequencer2([0,notes['D2'],0,notes['D2'],0,notes['D2'],0,notes['D2']], mul=0.3)
 bass_mix = bass.mix(2).out()
 
