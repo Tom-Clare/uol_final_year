@@ -1,3 +1,5 @@
+Project paper can be read [here](https://github.com/Tom-Clare/uol_final_year/blob/main/Project%20Report.pdf).
+
 # Final Year Project
 Final year project for my Computer Science Undergraduate Degree at the University of Lincoln
 
